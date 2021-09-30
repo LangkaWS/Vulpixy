@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "dev": "nodemon server.ts"
+    "dev": "nodemon src/server.ts"
   },
   "author": "Aurore Weingartner (Vulpixy Games)",
   "license": "SEE LICENSE IN LICENSE.md",
