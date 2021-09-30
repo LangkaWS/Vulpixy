@@ -13,5 +13,5 @@ app.use(express.json());
 const httpServer = createServer(app);
 
 httpServer.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}`);
+	console.log(`Listening at http://localhost:${port}`);
 });
