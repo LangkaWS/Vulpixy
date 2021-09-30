@@ -18,7 +18,7 @@ const verifyVars = (props: Array<string>, vars: dotenv.DotenvParseOutput): boole
 	return props.every(prop => prop in vars);
 };
 
-export default () => {
+export default (): dotenv.DotenvParseOutput => {
 	try {
 		const envVars = getVars();
 		const reqProps = ['SECRET', 'DB_DIALECT', 'DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_NAME'];
