@@ -1,6 +1,7 @@
 import express from 'express';
 import env from './config/env';
 import { createServer } from 'http';
+import database from './database';
 
 const envVars = env();
 
@@ -15,3 +16,5 @@ const httpServer = createServer(app);
 httpServer.listen(port, () => {
 	console.log(`Listening at http://localhost:${port}`);
 });
+
+database();
