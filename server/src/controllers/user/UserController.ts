@@ -104,11 +104,7 @@ export default class UserController {
 	 */
 	static getAllUsers = async (req: Request, res: Response): Promise<void> => {
 		try {
-			const users = await User.findAll({
-				attributes: {
-					exclude: ['id', 'email', 'password', 'createdAt']
-				}
-			});
+			const users = await UserRepository.findAllPublic();
 			res.status(200).send(JSON.stringify(users, null, 2));
 		} catch (error) {
 			res.status(500).end();

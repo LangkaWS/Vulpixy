@@ -6,6 +6,24 @@ import User from '../../models/user/User';
 export default class UserRepository {
 
 	/**
+	 * Search for multiple user instances. Exclude private user information (id, email, password).
+	 * 
+	 * @returns {Promise<User[] | null>} all the user instances
+	 */
+	static findAllPublic = async (): Promise<User[] | null> => {
+		try {
+			const users = await User.findAll({
+				attributes: {
+					exclude: ['id', 'email', 'password']
+				}
+			});
+			return users;
+		} catch (error) {
+			throw new Error(`Error in findAllPublic: ${error}`);
+		}
+	}
+
+	/**
 	 * Search for a single user instance, based on the username.
 	 * 
 	 * @param {string} username username to search
