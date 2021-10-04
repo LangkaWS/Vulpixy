@@ -95,6 +95,27 @@ export default class UserController {
 	}
 
 	/**
+	 * Get all registered users.
+	 * 
+	 * Selects all user attributes excluding id, email, password and 'created at' timestamp.
+	 * 
+	 * @param {Request}  req the HTTP request
+	 * @param {Response} res the HTTP response
+	 */
+	static getAllUsers = async (req: Request, res: Response): Promise<void> => {
+		try {
+			const users = await User.findAll({
+				attributes: {
+					exclude: ['id', 'email', 'password', 'createdAt']
+				}
+			});
+			res.status(200).send(JSON.stringify(users, null, 2));
+		} catch (error) {
+			res.status(500).end();
+		}
+	}
+
+	/**
 	 * Trim the username.
 	 * 
 	 * @param {string} username the username to format
