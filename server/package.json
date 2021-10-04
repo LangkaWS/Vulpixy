@@ -9,6 +9,7 @@
   "author": "Aurore Weingartner (Vulpixy Games)",
   "license": "SEE LICENSE IN LICENSE.md",
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.13",
     "@typescript-eslint/eslint-plugin": "^4.32.0",
     "@typescript-eslint/parser": "^4.32.0",
@@ -17,6 +18,7 @@
     "typescript": "^4.4.3"
   },
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "sequelize": "^6.6.5",
