@@ -116,6 +116,31 @@ export default class UserController {
 	}
 
 	/**
+	 * Get a user.
+	 * 
+	 * Search a username and send public information about the user found.
+	 * 
+	 * @param {Request}  req the HTTP request
+	 * @param {Response} res the HTTP response
+	 */
+	static getUser = async (req: Request, res: Response): Promise<void> => {
+		try {
+			const { username } = req.params;
+			const user = await UserRepository.findByUsernamePublic(username);
+
+			if (!user) {
+				res.status(404).end();
+				return;
+			}
+
+			res.status(200).send(user);
+
+		} catch (error) {
+			res.status(500).end();
+		}
+	}
+
+	/**
 	 * Trim the username.
 	 * 
 	 * @param {string} username the username to format

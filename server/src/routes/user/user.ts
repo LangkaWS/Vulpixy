@@ -7,4 +7,8 @@ userRouter
 	.route('/all')
 	.get(UserController.getAllUsers);
 
+userRouter
+	.route('/:username')
+	.get(UserController.getUser);
+
 export default userRouter;
