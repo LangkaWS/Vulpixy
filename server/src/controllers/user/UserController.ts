@@ -149,6 +149,7 @@ export default class UserController {
 	static updateUser = async (req: Request, res: Response): Promise<void> => {
 		try {
 
+			const { username: tokenUsername } = res.locals.user;
 			const { username: currUsername } = req.params;
 			const { 
 				password: currPassword, 
@@ -157,7 +158,7 @@ export default class UserController {
 				newPassword: reqPassword 
 			} = req.body;
 
-			if (!currUsername || !currPassword) {
+			if (!currUsername || !currPassword || currUsername !== tokenUsername) {
 				res.status(400).send('Invalid request');
 				return;
 			}
@@ -218,11 +219,12 @@ export default class UserController {
 	 */
 	static deleteUser = async (req: Request, res: Response): Promise<void> => {
 		try {
+			const { username: tokenUsername } = res.locals.user;
 			const { username } = req.params;
 			const { password } = req.body;
 
-			if (!username || !password) {
-				res.status(400).send('Missing at least one parameter.');
+			if (!username || !password || username !== tokenUsername) {
+				res.status(400).send('Invalid request');
 				return;
 			}
 
