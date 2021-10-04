@@ -10,6 +10,7 @@ userRouter
 userRouter
 	.route('/:username')
 	.get(UserController.getUser)
-	.put(UserController.updateUser);
+	.put(UserController.updateUser)
+	.delete(UserController.deleteUser);
 
 export default userRouter;

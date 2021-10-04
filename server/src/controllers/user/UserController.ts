@@ -207,6 +207,48 @@ export default class UserController {
 	}
 
 	/**
+	 * Delete a user instance.
+	 * 
+	 * Search a user instance based on the username.
+	 * Check if credentials are valid, then delete the user instance.
+	 * 
+	 * @param {Request}  req the HTTP request
+	 * @param {Response} res the HTTP response
+	 */
+	static deleteUser = async (req: Request, res: Response): Promise<void> => {
+		try {
+			const { username } = req.params;
+			const { password } = req.body;
+
+			if (!username || !password) {
+				res.status(400).send('Missing at least one parameter.');
+				return;
+			}
+
+			const user = await UserRepository.findByUsername(username);
+
+			if (!user) {
+				res.status(400).send('Invalid credentials');
+				return;
+			}
+
+			const isPasswordCorrect = await user.authenticate(password);
+
+			if (!isPasswordCorrect) {
+				res.status(400).send('Invalid credentials');
+				return;
+			}
+
+			await user.destroy();
+
+			res.status(200).end();
+
+		} catch (error) {
+			res.status(500).end();
+		}
+	}
+
+	/**
 	 * Trim the username.
 	 * 
 	 * @param {string} username the username to format
