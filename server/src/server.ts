@@ -2,6 +2,7 @@ import express from 'express';
 import env from './config/env';
 import { createServer } from 'http';
 import database from './database';
+import routeConfig from './routes';
 
 const envVars = env();
 
@@ -18,3 +19,5 @@ httpServer.listen(port, () => {
 });
 
 database();
+
+routeConfig(app);
