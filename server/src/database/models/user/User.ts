@@ -9,6 +9,7 @@ import bcrypt from 'bcrypt';
 class User extends Model {
 
 	public username!: string;
+	public email!: string;
 	public password!: string;
 
 	public static initialize = (sequelize: Sequelize): void => {

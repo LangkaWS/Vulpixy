@@ -137,6 +137,78 @@ export default class UserController {
 	}
 
 	/**
+	 * Update the user, based on the username.
+	 * 
+	 * Check if credentials are valid.
+	 * If a new username and/or a new email are provided, format them and check if they are already in use.
+	 * Hash the password
+	 * Finally, save the updated user instance.
+	 * 
+	 * @param {Request}  req the HTTP request
+	 * @param {Response} res the HTTP response
+	 */
+	static updateUser = async (req: Request, res: Response): Promise<void> => {
+		try {
+
+			const { username: currUsername } = req.params;
+			const { 
+				password: currPassword, 
+				newUsername: reqUsername, 
+				newEmail: reqEmail, 
+				newPassword: reqPassword 
+			} = req.body;
+
+			if (!currUsername || !currPassword) {
+				res.status(400).send('Invalid request');
+				return;
+			}
+
+			const user = await UserRepository.findByUsername(currUsername);
+
+			if (!user) {
+				res.status(400).send('Invalid credentials');
+				return;
+			}
+
+			const isPasswordCorrect = await user.authenticate(currPassword);
+
+			if (!isPasswordCorrect) {
+				res.status(400).send('Invalid credentials');
+				return;
+			}
+
+			if (reqUsername) {
+				const newUsername = this.formatUsername(reqUsername);
+				if (newUsername !== user.username && await this.isExistingUsername(newUsername)) {
+					res.status(400).send('This username is already in use.');
+					return;
+				}
+				user.username = newUsername;
+			}
+
+			if (reqEmail) {
+				const newEmail = this.formatEmail(reqEmail);
+				if (newEmail !== user.email && await this.isExistingEmail(newEmail)) {
+					res.status(400).send('This email is already in use.');
+					return;
+				}
+				user.email = newEmail;
+			}
+
+			if (reqPassword) {
+				user.password = await this.hashPassword(reqPassword);
+			}
+
+			await user.save();
+
+			res.status(200).end();
+			
+		} catch (error) {
+			res.status(500).end();
+		}
+	}
+
+	/**
 	 * Trim the username.
 	 * 
 	 * @param {string} username the username to format
