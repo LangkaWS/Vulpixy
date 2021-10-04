@@ -201,7 +201,9 @@ export default class UserController {
 
 			await user.save();
 
-			res.status(200).end();
+			res.status(200).json({
+				token: user.getToken()
+			});
 			
 		} catch (error) {
 			res.status(500).end();
