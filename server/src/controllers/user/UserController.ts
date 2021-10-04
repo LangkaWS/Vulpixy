@@ -5,8 +5,6 @@ import User from '../../database/models/user/User';
 
 /**
  * User controller class controls the user data flow.
- * 
- * This class controls registration of users.
  */
 export default class UserController {
 
