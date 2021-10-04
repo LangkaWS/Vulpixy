@@ -7,4 +7,8 @@ homeRouter
 	.route('/register')
 	.post(UserController.register);
 	
+homeRouter
+	.route('/login')
+	.post(UserController.login);
+
 export default homeRouter;

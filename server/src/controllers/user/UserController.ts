@@ -55,6 +55,46 @@ export default class UserController {
 	}
 
 	/**
+	 * Log in the user.
+	 * 
+	 * Search a user with the provided username, then check if the provided password is the same as the password of the user found.
+	 * If everything is ok, send in response a JSON with the username.
+	 * 
+	 * @param {Request}  req the HTTP request
+	 * @param {Response} res the HTTP response
+	 */
+	static login = async (req: Request, res: Response): Promise<void> => {
+		try {
+			const { username, password } = req.body;
+
+			if (!username || !password) {
+				res.status(400).send('Missing at least one parameter.');
+				return;
+			}
+
+			const user = await UserRepository.findByUsername(username);
+
+			if (!user) {
+				res.status(400).end('Invalid credentials.');
+				return;
+			}
+
+			const isPasswordCorrect = await user.authenticate(password);
+			if (!isPasswordCorrect) {
+				res.status(400).end('Invalid credentials.');
+				return;
+			}
+
+			res.status(200).json({
+				username: user.username
+			});
+
+		} catch (error) {
+			res.status(500).end();
+		}
+	}
+
+	/**
 	 * Trim the username.
 	 * 
 	 * @param {string} username the username to format
