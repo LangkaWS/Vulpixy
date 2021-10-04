@@ -84,7 +84,8 @@ export default class UserController {
 			}
 
 			res.status(200).json({
-				username: user.username
+				username: user.username,
+				token: user.getToken()
 			});
 
 		} catch (error) {

@@ -1,5 +1,7 @@
 import { DataTypes, Model, Sequelize } from 'sequelize';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import env from '../../../config/env';
 
 /**
  * Describe a user.
@@ -52,6 +54,17 @@ class User extends Model {
 	 */
 	public authenticate = async (password: string): Promise<boolean> => {
 		return await bcrypt.compare(password, this.password);
+	}
+
+	/**
+	 * Create a JSON Web Token for the user.
+	 * 
+	 * @returns {string} JSON Web Token string payload
+	 */
+	public getToken = (): string => {
+		const secret = env().SECRET;
+		const payload = { username: this.username };
+		return jwt.sign(payload, secret);
 	}
 
 }
