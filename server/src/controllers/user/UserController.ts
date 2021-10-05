@@ -136,6 +136,39 @@ export default class UserController {
 	}
 
 	/**
+	 * Get a user.
+	 * 
+	 * Search a username and send all information about the user found.
+	 * 
+	 * @param {Request}  req the HTTP request
+	 * @param {Response} res the HTTP response
+	 */
+	static getPrivateUser = async (req: Request, res: Response): Promise<void> => {
+		try {
+			const { username } = req.params;
+			const { username: tokenUsername } = res.locals.user;
+
+			if (username !== tokenUsername) {
+				res.status(403).end();
+				return;
+			}
+
+			const user = await UserRepository.findByUsernamePrivate(username);
+
+			if (!user) {
+				res.status(404).end();
+				return;
+			}
+
+			res.status(200).send(user);
+
+
+		} catch (error) {
+			res.status(500).end();
+		}
+	}
+
+	/**
 	 * Update the user, based on the username.
 	 * 
 	 * Check if credentials are valid.

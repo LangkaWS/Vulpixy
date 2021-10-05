@@ -13,4 +13,8 @@ userRouter
 	.put(UserController.updateUser)
 	.delete(UserController.deleteUser);
 
+userRouter
+	.route('/:username/private')
+	.get(UserController.getPrivateUser);
+
 export default userRouter;

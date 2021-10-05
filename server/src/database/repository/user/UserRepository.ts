@@ -86,4 +86,27 @@ export default class UserRepository {
 		}
 	}
 
+	/**
+	 * Search for a single user instance, based on the username and exclude private attributes from instance.
+	 * 
+	 * @param {string} username username to search
+	 * 
+	 * @returns {Promise<User | null>} the first user instance found or null if none can be found
+	 */
+	static findByUsernamePrivate = async (username: string): Promise<User | null> => {
+		try {
+			const user = await User.findOne({
+				where: {
+					username: username
+				},
+				attributes: {
+					exclude: ['id', 'password']
+				}
+			});
+			return user;
+		} catch (error) {
+			throw new Error(`Error in findByUsernamePrivate: ${error}`);
+		}
+	}
+
 }
