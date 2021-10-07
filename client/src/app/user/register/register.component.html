@@ -13,7 +13,7 @@
 			autofocus
 			required
 		/>
-		<div *ngIf="formControls.username.errors && isSubmitted">
+		<div *ngIf="isSubmitted && formControls.username.errors">
 			Le nom d'utilisateur est requis.
 		</div>
 	</div>
@@ -26,7 +26,7 @@
 			formControlName="email"
 			required
 		/>
-		<div *ngIf="formControls.email.errors && isSubmitted">
+		<div *ngIf="isSubmitted && formControls.email.errors">
 			L'email est requis.
 		</div>
 	</div>
@@ -39,7 +39,7 @@
       formControlName="password"
       required
 		/>
-		<div *ngIf="formControls.password.errors && isSubmitted">
+		<div *ngIf="isSubmitted && formControls.password.errors">
       Le mot de passe est requis.
     </div>
 	</div>
