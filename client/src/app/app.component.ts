@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from './_services/auth.service';
 
 @Component({
@@ -12,11 +13,18 @@ export class AppComponent implements OnInit {
 
 	constructor(
 		private authService: AuthService,
+		private router: Router
 	) {}
 
 	ngOnInit(): void {
 		this.authService.isLoggedIn.subscribe(isLoggedIn => {
 			this.isLoggedIn = isLoggedIn
 		});
+	}
+
+	public logout() {
+		this.authService.logout();
+		this.isLoggedIn = false;
+		this.router.navigateByUrl('');
 	}
 }

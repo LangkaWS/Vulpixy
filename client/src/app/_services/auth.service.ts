@@ -42,4 +42,9 @@ export class AuthService {
 	public register(user: User) {
 		return this.http.post(`${environment.apiURL}/register`, user, this.httpOptions);
 	}
+
+	public logout() {
+		this.tokenStorageService.logout();
+		this.isLoggedIn$.next(false);
+	}
 }
