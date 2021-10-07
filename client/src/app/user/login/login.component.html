@@ -1,0 +1,44 @@
+<form
+	[formGroup]="loginForm" 
+  (ngSubmit)="onSubmit()"
+  novalidate
+>
+
+	<div>
+		<label for="username">Nom d'utilisateur</label>
+    <input 
+      type="text" 
+      name="username" 
+      formControlName="username"
+      autofocus
+      required
+    />
+    <div
+      *ngIf="isSubmitted && formControls.username.errors"
+    >
+      Le nom d'utilisateur est requis.
+    </div>
+	</div>
+
+	<div>
+		<label for="password">Mot de passe</label>
+    <input 
+      type="password" 
+      name="password" 
+      formControlName="password"
+      required
+    />
+    <div
+      *ngIf="isSubmitted && formControls.password.errors"
+    >
+      Le mot de passe est requis.
+    </div>
+	</div>
+
+	<button type="submit">Se connecter</button>
+
+	<div *ngIf="isLoginFailed">
+		Connexion impossible : {{ errorMessage }}
+	</div>
+
+</form>
