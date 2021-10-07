@@ -40,7 +40,6 @@ export class AuthService {
 	}
 
 	public register(user: User) {
-		console.log(environment.apiURL);
 		return this.http.post(`${environment.apiURL}/register`, user, this.httpOptions);
 	}
 }
