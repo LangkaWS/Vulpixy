@@ -1,0 +1,66 @@
+<form
+	[formGroup]="registerForm"
+	(ngSubmit)="onSubmit()"
+	novalidate
+>
+
+	<div>
+		<label for="username">Nom d'utilisateur</label>
+		<input 
+			type="text"
+			name="username"
+			formControlName="username"
+			autofocus
+			required
+		/>
+		<div *ngIf="formControls.username.errors && isSubmitted">
+			Le nom d'utilisateur est requis.
+		</div>
+	</div>
+
+	<div>
+		<label for="email">Email</label>
+		<input 
+			type="email"
+			name="email"
+			formControlName="email"
+			required
+		/>
+		<div *ngIf="formControls.email.errors && isSubmitted">
+			L'email est requis.
+		</div>
+	</div>
+
+	<div>
+		<label for="password">Mot de passe</label>
+		<input 
+			type="password" 
+      name="password" 
+      formControlName="password"
+      required
+		/>
+		<div *ngIf="formControls.password.errors && isSubmitted">
+      Le mot de passe est requis.
+    </div>
+	</div>
+
+	<div>
+		<label for="confirm-password">Confirmation du mot de passe</label>
+		<input 
+			type="password" 
+      name="confirm-password" 
+      formControlName="confirmPassword"
+      required
+		/>
+		<div *ngIf="isSubmitted && (formControls.confirmPassword.errors || registerForm.hasError('notSame'))">
+      Le mot de passe et la confirmation ne correspondent pas.
+    </div>
+	</div>
+
+	<button type="submit">S'enregistrer</button>
+
+	<div *ngIf="errorMessage">
+		Connexion impossible: {{ errorMessage }}
+	</div>
+
+</form>
