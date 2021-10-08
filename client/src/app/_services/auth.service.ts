@@ -17,7 +17,7 @@ export class AuthService {
 
   constructor(
 		private http: HttpClient,
-		private tokenStorageService: TokenStorageService
+		private _tokenStorageService: TokenStorageService,
 	) {
 		this.isLoggedIn$ = new BehaviorSubject<boolean>(false);
 	}
@@ -32,7 +32,7 @@ export class AuthService {
 			this.httpOptions);
 
 		response.subscribe(data => {
-			this.tokenStorageService.saveToken(data);
+			this._tokenStorageService.saveToken(data);
 			this.isLoggedIn$.next(true);
 		});
 
@@ -40,7 +40,7 @@ export class AuthService {
 	}
 
 	public logout() {
-		this.tokenStorageService.logout();
+		this._tokenStorageService.logout();
 		this.isLoggedIn$.next(false);
 	}
 }
