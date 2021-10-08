@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { TokenStorageService } from './token-storage.service';
+import { TokenStorageService } from '../token-storage.service';
 import { BehaviorSubject } from 'rxjs';
-import { PrivateUserApiService } from './api/private-user-api.service';
+import { PrivateUserApiService } from '../api/private-user-api.service';
 
 @Injectable({
   providedIn: 'root'
