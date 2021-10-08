@@ -13,6 +13,7 @@ import { ErrorDialogComponent } from './errors/error-dialog/error-dialog.compone
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GlobalErrorHandler } from './_services/error/global-error-handler';
 import { MatDialogModule } from '@angular/material/dialog';
+import { UserDetailComponent } from './user/user-detail/user-detail.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     RegisterComponent,
     LoginComponent,
     UsersComponent,
-    ErrorDialogComponent
+    ErrorDialogComponent,
+    UserDetailComponent
   ],
   imports: [
     BrowserModule,
