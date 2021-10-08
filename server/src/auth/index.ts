@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import env from '../config/env';
+import UserRepository from '../database/repository/user/UserRepository';
 
 /**
  * Verify JWT.
@@ -11,10 +12,11 @@ import env from '../config/env';
  * @param {Response}     res  the HTTP response
  * @param {NextFunction} next the next middleware function
  */
-export const verifyToken = (req: Request, res: Response, next: NextFunction): void => {
-	const token = req.headers['access-token'];
+export const verifyToken = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 
-	if (!token) {
+	const session = req.session;
+
+	if (!session || !session.authToken) {
 		res.status(401).end();
 		return;
 	}
@@ -22,7 +24,7 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction): vo
 	const secret = env().SECRET;
 
 	try {
-		const decodedToken = jwt.verify(token.toString(), secret);
+		const decodedToken = jwt.verify(session.authToken.toString(), secret);
 		res.locals.user = decodedToken;
 	} catch (error) {
 		res.status(403).end();

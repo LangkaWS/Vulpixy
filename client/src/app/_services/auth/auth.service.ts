@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { TokenStorageService } from '../token-storage.service';
 import { BehaviorSubject } from 'rxjs';
 import { PrivateUserApiService } from '../api/private-user-api.service';
 
@@ -11,21 +10,24 @@ export class AuthService {
 	private isLoggedIn$: BehaviorSubject<boolean>;
 
   constructor(
-		private _tokenStorageService: TokenStorageService,
 		private _privateUserApiService: PrivateUserApiService
 	) {
-		this.isLoggedIn$ = new BehaviorSubject<boolean>(false);
+		this.isLoggedIn$ = new BehaviorSubject<boolean>(this._isLoggedIn());
 	}
 
 	get isLoggedIn() {
 		return this.isLoggedIn$;
 	}
 
+	private _isLoggedIn() {
+		return window.sessionStorage.getItem('isLoggedIn') === 'true';
+	}
+
 	public login(username: string, password: string) {
 		const response = this._privateUserApiService.login(username, password);
 
-		response.subscribe(data => {
-			this._tokenStorageService.saveToken(data);
+		response.subscribe(() => {
+			window.sessionStorage.setItem('isLoggedIn', 'true');
 			this.isLoggedIn$.next(true);
 		});
 
@@ -33,7 +35,9 @@ export class AuthService {
 	}
 
 	public logout() {
-		this._tokenStorageService.logout();
-		this.isLoggedIn$.next(false);
+		this._privateUserApiService.logout().subscribe(() => {
+			window.sessionStorage.clear();
+			this.isLoggedIn$.next(false);
+		});
 	}
 }

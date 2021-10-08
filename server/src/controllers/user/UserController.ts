@@ -84,11 +84,20 @@ export default class UserController {
 				return;
 			}
 
-			res.status(200).send(new ApiResponse(true, { token: user.getToken() }, null));
+			req.session.authToken = user.getToken();
+			res.status(200).send(new ApiResponse(true, null, null));
 
 		} catch (error) {
 			res.status(500).send(new ApiResponse(false, null, 'InternalError'));
 		}
+	}
+
+	static logout = (req: Request, res: Response): void => {
+		res.status(200).clearCookie('session');
+		req.session.destroy(() => {
+			res.send(new ApiResponse(true, null, null));
+		});
+		return;
 	}
 
 	/**

@@ -11,4 +11,8 @@ homeRouter
 	.route('/login')
 	.post(UserController.login);
 
+homeRouter
+	.route('/logout')
+	.get(UserController.logout);
+
 export default homeRouter;

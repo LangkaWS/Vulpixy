@@ -17,17 +17,13 @@ export class CustomHttpInterceptor implements HttpInterceptor {
 		private readonly _tokenStorageService: TokenStorageService,
 	) {}
 
-	private getToken() {
-		return this._tokenStorageService.getToken() ?? '';
-	}
-
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
 		const newRequest = request.clone({
 			setHeaders: { 
 				'Content-Type': 'application/json',
-				'Access-Token': this.getToken()
-			}
+			},
+			withCredentials: true
 		});
 
     return this.requestHandler(newRequest, next);

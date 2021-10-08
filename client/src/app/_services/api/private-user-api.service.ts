@@ -22,9 +22,11 @@ export class PrivateUserApiService extends ApiService<PrivateUser> {
 
 	public login(username: string, password: string) {
 		return this._httpClient
-			.post(`${environment.apiURL}/login`, { username, password })
-			.pipe(map((data: any) => {
-				return data.result.token;
-			}));
+			.post(`${environment.apiURL}/login`, { username, password });
+	}
+
+	public logout() {
+		return this._httpClient
+			.get(`${environment.apiURL}/logout`);
 	}
 }
