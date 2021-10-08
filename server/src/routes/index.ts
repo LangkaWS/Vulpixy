@@ -4,7 +4,7 @@ import user from './user/user';
 import { verifyToken } from '../auth';
 
 const config = (app: Application): void => {
-	app.use('/user', verifyToken, user);
+	app.use('/users', verifyToken, user);
 	app.use('/', home);
 };
 
