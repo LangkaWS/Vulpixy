@@ -53,6 +53,9 @@ export class CustomHttpInterceptor implements HttpInterceptor {
               case 404:
                 console.error('(CustomHttpInterceptor)', 'Not found');
 								break;
+							case 409:
+                console.error('(CustomHttpInterceptor)', 'Conflict');
+								break;
               default:
                 errorMessage = httpErrorResponse.message || httpErrorResponse.statusText;
             }
