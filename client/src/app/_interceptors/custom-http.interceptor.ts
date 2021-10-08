@@ -7,15 +7,12 @@ import {
 	HttpErrorResponse
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { TokenStorageService } from '../_services/token-storage.service';
 import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class CustomHttpInterceptor implements HttpInterceptor {
 
-  constructor(
-		private readonly _tokenStorageService: TokenStorageService,
-	) {}
+  constructor() {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
