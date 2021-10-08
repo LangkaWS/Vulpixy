@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User } from 'src/app/_models/user';
-import { AuthService } from 'src/app/_services/auth.service';
+import { PrivateUserApiService } from 'src/app/_services/api/private-user-api.service';
 
 @Component({
   selector: 'app-register',
@@ -22,8 +21,8 @@ export class RegisterComponent implements OnInit {
 	errorMessage = '';
 
   constructor(
-		private authService: AuthService,
 		private _formBuilder: FormBuilder,
+		private _privateUserApiService: PrivateUserApiService,
 		private _router: Router
 	) { }
 
@@ -45,9 +44,13 @@ export class RegisterComponent implements OnInit {
 			return;
 		}
 		const formData = this.registerForm.value;
-		const user = new User(formData.username, formData.email, formData.password);
+		const user = { 
+			username: formData.username, 
+			email: formData.email, 
+			password: formData.password
+		};
 
-		this.authService.register(user).subscribe(() => {
+		this._privateUserApiService.register(user).subscribe(() => {
 			this._router.navigateByUrl('');
 		}, error => {
 			this.errorMessage = error.error;
