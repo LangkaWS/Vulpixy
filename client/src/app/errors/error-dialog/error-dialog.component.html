@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Une erreur est survenue !</h1>
+<div mat-dialog-content>
+	<p *ngIf="data.status">
+		Code erreur : {{ data.status }}
+	</p>
+	<p>
+		{{ data?.message }}
+	</p>
+</div>
+<div mat-dialog-actions>
+	<button mat-raised-button mat-dialog-close>Fermer</button>
+</div>

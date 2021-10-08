@@ -1,5 +1,5 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -9,25 +9,36 @@ import { RegisterComponent } from './user/register/register.component';
 import { LoginComponent } from './user/login/login.component';
 import { UsersComponent } from './user/users/users.component';
 import { CustomHttpInterceptor } from './_interceptors/custom-http.interceptor';
+import { ErrorDialogComponent } from './errors/error-dialog/error-dialog.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { GlobalErrorHandler } from './_services/error/global-error-handler';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterComponent,
     LoginComponent,
-    UsersComponent
+    UsersComponent,
+    ErrorDialogComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
 		ReactiveFormsModule,
-		HttpClientModule
+		HttpClientModule,
+		BrowserAnimationsModule,
+		MatDialogModule
   ],
   providers: [
 		{
 			provide: HTTP_INTERCEPTORS,
 			useClass: CustomHttpInterceptor,
 			multi: true
+		},
+		{
+			provide: ErrorHandler,
+			useClass: GlobalErrorHandler
 		}
 	],
   bootstrap: [AppComponent]
