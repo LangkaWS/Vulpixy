@@ -1,23 +1,18 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { environment } from 'src/environments/environment';
-import { User } from 'src/app/_models/user';
 import { TokenStorageService } from './token-storage.service';
 import { BehaviorSubject } from 'rxjs';
+import { PrivateUserApiService } from './api/private-user-api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-	private httpOptions = {
-		headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-	}
 	private isLoggedIn$: BehaviorSubject<boolean>;
 
   constructor(
-		private http: HttpClient,
 		private _tokenStorageService: TokenStorageService,
+		private _privateUserApiService: PrivateUserApiService
 	) {
 		this.isLoggedIn$ = new BehaviorSubject<boolean>(false);
 	}
@@ -27,9 +22,7 @@ export class AuthService {
 	}
 
 	public login(username: string, password: string) {
-		const response = this.http.post(`${environment.apiURL}/login`, 
-			{ username, password }, 
-			this.httpOptions);
+		const response = this._privateUserApiService.login(username, password);
 
 		response.subscribe(data => {
 			this._tokenStorageService.saveToken(data);
