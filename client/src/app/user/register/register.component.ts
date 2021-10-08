@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/_services/auth.service';
 })
 export class RegisterComponent implements OnInit {
 	
-	registerForm = this.formBuilder.group({
+	registerForm = this._formBuilder.group({
 		username: '',
 		email: '',
 		password: '',
@@ -22,9 +22,9 @@ export class RegisterComponent implements OnInit {
 	errorMessage = '';
 
   constructor(
-		private formBuilder: FormBuilder,
 		private authService: AuthService,
-		private router: Router
+		private _formBuilder: FormBuilder,
+		private _router: Router
 	) { }
 
   ngOnInit(): void {
@@ -48,7 +48,7 @@ export class RegisterComponent implements OnInit {
 		const user = new User(formData.username, formData.email, formData.password);
 
 		this.authService.register(user).subscribe(() => {
-			this.router.navigateByUrl('');
+			this._router.navigateByUrl('');
 		}, error => {
 			this.errorMessage = error.error;
 		});
