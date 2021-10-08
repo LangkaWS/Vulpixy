@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import UserRepository from '../../database/repository/user/UserRepository';
 import User from '../../database/models/user/User';
+import { ApiResponse } from '../../api/ApiResponse';
 
 /**
  * User controller class controls the user data flow.
@@ -23,7 +24,7 @@ export default class UserController {
 			const { username, email, password } = req.body;
 
 			if (!username || !email || !password) {
-				res.status(400).send('Missing at least one parameter.');
+				res.status(400).send(new ApiResponse(false, null, 'MissingParameter'));
 				return;
 			}
 
@@ -34,21 +35,21 @@ export default class UserController {
 			};
 
 			if (await this.isExistingUsername(username)) {
-				res.status(409).send('This username is already in use.');
+				res.status(409).send(new ApiResponse(false, null, 'UsernameAlreadyInUse'));
 				return;
 			}
 
 			if (await this.isExistingEmail(email)) {
-				res.status(409).send('This email is already in use.');
+				res.status(409).send(new ApiResponse(false, null, 'EmailAlreadyInUse'));
 				return;
 			}
 
 			await User.create(user);
-			res.status(201).end();
+			res.status(201).send(new ApiResponse(true, null, null));
 			return;
 
 		} catch (error) {
-			res.status(500).end();
+			res.status(500).send(new ApiResponse(false, null, 'InternalError'));
 		}
 	}
 
@@ -66,20 +67,20 @@ export default class UserController {
 			const { username, password } = req.body;
 
 			if (!username || !password) {
-				res.status(400).send('Missing at least one parameter.');
+				res.status(400).send(new ApiResponse(false, null, 'MissingParameter'));
 				return;
 			}
 
 			const user = await UserRepository.findByUsername(username);
 
 			if (!user) {
-				res.status(400).end('Invalid credentials.');
+				res.status(400).send(new ApiResponse(false, null, 'InvalidCredentials'));
 				return;
 			}
 
 			const isPasswordCorrect = await user.authenticate(password);
 			if (!isPasswordCorrect) {
-				res.status(400).end('Invalid credentials.');
+				res.status(400).send(new ApiResponse(false, null, 'InvalidCredentials'));
 				return;
 			}
 
@@ -89,7 +90,7 @@ export default class UserController {
 			});
 
 		} catch (error) {
-			res.status(500).end();
+			res.status(500).send(new ApiResponse(false, null, 'InternalError'));
 		}
 	}
 
@@ -104,9 +105,9 @@ export default class UserController {
 	static getAllUsers = async (req: Request, res: Response): Promise<void> => {
 		try {
 			const users = await UserRepository.findAllPublic();
-			res.status(200).send(JSON.stringify(users, null, 2));
+			res.status(200).send(new ApiResponse(true, users, null));
 		} catch (error) {
-			res.status(500).end();
+			res.status(500).send(new ApiResponse(false, null, 'InternalError'));
 		}
 	}
 
@@ -124,14 +125,14 @@ export default class UserController {
 			const user = await UserRepository.findByUsernamePublic(username);
 
 			if (!user) {
-				res.status(404).end();
+				res.status(204).send(new ApiResponse(true, null, 'NoData'));
 				return;
 			}
 
-			res.status(200).send(user);
+			res.status(200).send(new ApiResponse(true, user, null));
 
 		} catch (error) {
-			res.status(500).end();
+			res.status(500).send(new ApiResponse(false, null, 'InternalError'));
 		}
 	}
 
@@ -149,22 +150,22 @@ export default class UserController {
 			const { username: tokenUsername } = res.locals.user;
 
 			if (username !== tokenUsername) {
-				res.status(403).end();
+				res.status(403).send(new ApiResponse(false, null, 'Forbidden'));
 				return;
 			}
 
 			const user = await UserRepository.findByUsernamePrivate(username);
 
 			if (!user) {
-				res.status(404).end();
+				res.status(204).send(new ApiResponse(true, null, 'NoData'));
 				return;
 			}
 
-			res.status(200).send(user);
+			res.status(200).send(new ApiResponse(true, user, null));
 
 
 		} catch (error) {
-			res.status(500).end();
+			res.status(500).send(new ApiResponse(false, null, 'InternalError'));
 		}
 	}
 
@@ -192,28 +193,28 @@ export default class UserController {
 			} = req.body;
 
 			if (!currUsername || !currPassword || currUsername !== tokenUsername) {
-				res.status(400).send('Invalid request');
+				res.status(400).send(new ApiResponse(false, null, 'MissingParameter'));
 				return;
 			}
 
 			const user = await UserRepository.findByUsername(currUsername);
 
 			if (!user) {
-				res.status(400).send('Invalid credentials');
+				res.status(400).send(new ApiResponse(false, null, 'InvalidCredentials'));
 				return;
 			}
 
 			const isPasswordCorrect = await user.authenticate(currPassword);
 
 			if (!isPasswordCorrect) {
-				res.status(400).send('Invalid credentials');
+				res.status(400).send(new ApiResponse(false, null, 'InvalidCredentials'));
 				return;
 			}
 
 			if (reqUsername) {
 				const newUsername = this.formatUsername(reqUsername);
 				if (newUsername !== user.username && await this.isExistingUsername(newUsername)) {
-					res.status(400).send('This username is already in use.');
+					res.status(409).send(new ApiResponse(false, null, 'UsernameAlreadyInUse'));
 					return;
 				}
 				user.username = newUsername;
@@ -222,7 +223,7 @@ export default class UserController {
 			if (reqEmail) {
 				const newEmail = this.formatEmail(reqEmail);
 				if (newEmail !== user.email && await this.isExistingEmail(newEmail)) {
-					res.status(400).send('This email is already in use.');
+					res.status(409).send(new ApiResponse(false, null, 'EmailAlreadyInUse'));
 					return;
 				}
 				user.email = newEmail;
@@ -234,12 +235,10 @@ export default class UserController {
 
 			await user.save();
 
-			res.status(200).json({
-				token: user.getToken()
-			});
+			res.status(200).send(new ApiResponse(true, { token: user.getToken() }, null));
 			
 		} catch (error) {
-			res.status(500).end();
+			res.status(500).send(new ApiResponse(false, null, 'InternalError'));
 		}
 	}
 
@@ -259,30 +258,30 @@ export default class UserController {
 			const { password } = req.body;
 
 			if (!username || !password || username !== tokenUsername) {
-				res.status(400).send('Invalid request');
+				res.status(400).send(new ApiResponse(false, null, 'MissingParameter'));
 				return;
 			}
 
 			const user = await UserRepository.findByUsername(username);
 
 			if (!user) {
-				res.status(400).send('Invalid credentials');
+				res.status(400).send(new ApiResponse(false, null, 'InvalidCredentials'));
 				return;
 			}
 
 			const isPasswordCorrect = await user.authenticate(password);
 
 			if (!isPasswordCorrect) {
-				res.status(400).send('Invalid credentials');
+				res.status(400).send(new ApiResponse(false, null, 'InvalidCredentials'));
 				return;
 			}
 
 			await user.destroy();
 
-			res.status(200).end();
+			res.status(200).send(new ApiResponse(true, null, null));
 
 		} catch (error) {
-			res.status(500).end();
+			res.status(500).send(new ApiResponse(false, null, 'InternalError'));
 		}
 	}
 
