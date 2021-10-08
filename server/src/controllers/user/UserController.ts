@@ -84,10 +84,7 @@ export default class UserController {
 				return;
 			}
 
-			res.status(200).json({
-				username: user.username,
-				token: user.getToken()
-			});
+			res.status(200).send(new ApiResponse(true, { token: user.getToken() }, null));
 
 		} catch (error) {
 			res.status(500).send(new ApiResponse(false, null, 'InternalError'));
