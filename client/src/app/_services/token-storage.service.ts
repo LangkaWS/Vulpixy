@@ -9,9 +9,13 @@ export class TokenStorageService {
 
   constructor() { }
 
-	public saveToken(token: Object) {
+	public saveToken(token: string) {
 		window.sessionStorage.removeItem(this.tokenKey);
-		window.sessionStorage.setItem(this.tokenKey, JSON.stringify(token));
+		window.sessionStorage.setItem(this.tokenKey, token);
+	}
+
+	public getToken() {
+		return window.sessionStorage.getItem(this.tokenKey);
 	}
 
 	public logout() {
