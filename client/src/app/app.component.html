@@ -1,9 +1,11 @@
 <h1>{{ title }}</h1>
 
 <nav>
+	<a routerLink="/users" *ngIf="isLoggedIn">Liste des utilisateurs</a>
+	<a routerLink="/profile" *ngIf="isLoggedIn">Mon profil</a>
+	<a (click)="logout()" *ngIf="isLoggedIn">Se déconnecter</a>
 	<a routerLink="/login" *ngIf="!isLoggedIn">Se connecter</a>
 	<a routerLink="/register" *ngIf="!isLoggedIn">S'enregistrer</a>
-	<a (click)="logout()" *ngIf="isLoggedIn">Se déconnecter</a>
 </nav>
 
 <router-outlet></router-outlet>
