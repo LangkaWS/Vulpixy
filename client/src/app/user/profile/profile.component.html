@@ -1,0 +1,10 @@
+<div *ngIf="user">
+	<h2>Mon profil</h2>
+	<ul>
+		<li>Nom d'utilisateur : {{ user.username }}</li>
+		<li>Email: {{ user.email }}</li>
+		<li>Membre depuis : {{ user.createdAt }}</li>
+	</ul>
+
+	<button>Editer mon profil</button>
+</div>

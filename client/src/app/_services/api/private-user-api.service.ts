@@ -12,7 +12,7 @@ import { ApiService } from './api.service';
 export class PrivateUserApiService extends ApiService<PrivateUser> {
 
   constructor(httpClient: HttpClient, apiSerializer: PrivateUserApiSerializer) {
-		super(httpClient, apiSerializer, 'users');
+		super(httpClient, apiSerializer, 'users/private');
 	}
 
 	public register(user: PrivateUser) {

@@ -14,7 +14,7 @@ userRouter
 	.delete(UserController.deleteUser);
 
 userRouter
-	.route('/:username/private')
+	.route('/private/:username')
 	.get(UserController.getPrivateUser);
 
 export default userRouter;

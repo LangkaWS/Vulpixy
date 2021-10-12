@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { PrivateUserApiService } from '../api/private-user-api.service';
+import { CryptoService } from '../crypto/crypto.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ export class AuthService {
 	private isLoggedIn$: BehaviorSubject<boolean>;
 
   constructor(
-		private _privateUserApiService: PrivateUserApiService
+		private _privateUserApiService: PrivateUserApiService,
+		private cryptoService: CryptoService,
 	) {
 		this.isLoggedIn$ = new BehaviorSubject<boolean>(this._isLoggedIn());
 	}
@@ -27,8 +29,11 @@ export class AuthService {
 		const response = this._privateUserApiService.login(username, password);
 
 		response.subscribe(() => {
-			window.sessionStorage.setItem('isLoggedIn', 'true');
 			this.isLoggedIn$.next(true);
+			this.setCurrentUser(username).subscribe(user => {
+				window.sessionStorage.setItem('user', this.cryptoService.encrypt(user));
+			});
+			window.sessionStorage.setItem('isLoggedIn', 'true');
 		});
 
 		return response;
@@ -40,4 +45,9 @@ export class AuthService {
 			this.isLoggedIn$.next(false);
 		});
 	}
+
+	private setCurrentUser(username: string) {
+		return this._privateUserApiService.get(username);
+	}
+
 }

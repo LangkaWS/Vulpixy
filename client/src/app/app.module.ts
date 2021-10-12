@@ -14,6 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GlobalErrorHandler } from './_services/error/global-error-handler';
 import { MatDialogModule } from '@angular/material/dialog';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
+import { ProfileComponent } from './user/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { UserDetailComponent } from './user/user-detail/user-detail.component';
     LoginComponent,
     UsersComponent,
     ErrorDialogComponent,
-    UserDetailComponent
+    UserDetailComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

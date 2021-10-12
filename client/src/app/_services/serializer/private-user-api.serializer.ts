@@ -15,7 +15,8 @@ export class PrivateUserApiSerializer extends BaseApiSerializer<PrivateUser> {
 		return {
 			username: object.username,
 			email: object.email,
-			password: object.password
+			password: object.password,
+			createdAt: object.createdAt
 		} as PrivateUser;
 	}
 
@@ -23,7 +24,8 @@ export class PrivateUserApiSerializer extends BaseApiSerializer<PrivateUser> {
 		return {
 			username: object.username,
 			email: object.email,
-			password: object.password
+			password: object.password,
+			createdAt: object.createdAt
 		}
 	}
 
