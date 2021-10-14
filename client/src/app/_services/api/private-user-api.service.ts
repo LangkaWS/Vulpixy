@@ -29,4 +29,11 @@ export class PrivateUserApiService extends ApiService<PrivateUser> {
 		return this._httpClient
 			.get(`${environment.apiURL}/logout`);
 	}
+
+	public update(id: string, item: PrivateUser) {
+		const url = `${environment.apiURL}/users/private/${id}`;
+
+		return this._httpClient
+			.put<PrivateUser>(url, this._apiSerializer.toJson(item));
+	}
 }

@@ -35,6 +35,14 @@ export abstract class ApiService<T> {
 			.pipe(map((data: any) => this.convertData(data)));
 	}
 
+	public update(id: string, item: T) {
+		const url = `${this._baseUrl}/${id}`;
+
+		return this._httpClient
+			.put(url, this._apiSerializer.toJson(item))
+			.pipe(map((data: any) => this.convertData(data)));
+	}
+
 	public get(id: string): Observable<T> {
 		const url = `${this._baseUrl}/${id}`;
 

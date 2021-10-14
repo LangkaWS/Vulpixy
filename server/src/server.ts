@@ -12,7 +12,7 @@ const app = express();
 const port = envVars.PORT || 8800;
 const corsOptions = {
 	origin: envVars.CLIENT_URL,
-	methods: ['GET', 'POST'],
+	methods: ['GET', 'POST', 'PUT', 'DELETE'],
 	credentials: true
 };
 const sessionCookieOptions = {

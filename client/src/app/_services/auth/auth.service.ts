@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { PrivateUserApiService } from '../api/private-user-api.service';
 import { CryptoService } from '../crypto/crypto.service';
+import { PrivateUser } from 'src/app/_models/private-user';
 
 @Injectable({
   providedIn: 'root'
@@ -48,6 +49,11 @@ export class AuthService {
 
 	private setCurrentUser(username: string) {
 		return this._privateUserApiService.get(username);
+	}
+
+	public updateCurrentUser(user: PrivateUser) {
+		window.sessionStorage.removeItem('user');
+		window.sessionStorage.setItem('user', this.cryptoService.encrypt(user));
 	}
 
 }

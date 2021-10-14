@@ -193,9 +193,8 @@ export default class UserController {
 			const { username: currUsername } = req.params;
 			const { 
 				password: currPassword, 
-				newUsername: reqUsername, 
-				newEmail: reqEmail, 
-				newPassword: reqPassword 
+				username: reqUsername, 
+				email: reqEmail, 
 			} = req.body;
 
 			if (!currUsername || !currPassword || currUsername !== tokenUsername) {
@@ -235,13 +234,10 @@ export default class UserController {
 				user.email = newEmail;
 			}
 
-			if (reqPassword) {
-				user.password = await this.hashPassword(reqPassword);
-			}
-
 			await user.save();
 
-			res.status(200).send(new ApiResponse(true, { token: user.getToken() }, null));
+			req.session.authToken = user.getToken();
+			res.status(200).send(new ApiResponse(true, null, null));
 			
 		} catch (error) {
 			res.status(500).send(new ApiResponse(false, null, 'InternalError'));

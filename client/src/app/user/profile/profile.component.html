@@ -1,4 +1,4 @@
-<div *ngIf="user">
+<div *ngIf="user && !displayForm">
 	<h2>Mon profil</h2>
 	<ul>
 		<li>Nom d'utilisateur : {{ user.username }}</li>
@@ -6,5 +6,59 @@
 		<li>Membre depuis : {{ user.createdAt }}</li>
 	</ul>
 
-	<button>Editer mon profil</button>
+	<button (click)="edit()">Editer mon profil</button>
 </div>
+
+<form
+	[formGroup]="profileForm"
+	(ngSubmit)="onSubmit()"
+	*ngIf="displayForm"
+	novalidate
+>
+
+	<div>
+		<label for="username">Nom d'utilisateur</label>
+		<input 
+			type="text"
+			name="username"
+			formControlName="username"
+			required
+		/>
+		<div *ngIf="submitted && formControls.username.errors">
+			Le nom d'utilisateur est requis.
+		</div>
+	</div>
+
+	<div>
+		<label for="email">Email</label>
+		<input
+			type="email" 
+			name="email"
+			formControlName="email"
+			required
+		/>
+		<div *ngIf="submitted && formControls.email.errors">
+			L'email est requis.
+		</div>
+	</div>
+
+	<div>
+		<label for="password">Mot de passe actuel</label>
+		<input 
+			type="password"
+			name="password"
+			formControlName="password"
+			required
+		/>
+		<div *ngIf="submitted && formControls.password.errors">
+      Le mot de passe est requis.
+    </div>
+	</div>
+
+	<button type="submit">Enregistrer</button>
+
+	<div *ngIf="errorMessage">
+		Connexion impossible: {{ errorMessage }}
+	</div>
+
+</form>
