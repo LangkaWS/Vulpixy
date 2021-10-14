@@ -6,7 +6,7 @@ import { UserApiService } from 'src/app/_services/api/user-api.service';
 @Component({
   selector: 'app-user-detail',
   templateUrl: './user-detail.component.html',
-  styleUrls: ['./user-detail.component.sass']
+  styleUrls: ['./user-detail.component.scss']
 })
 export class UserDetailComponent implements OnInit {
 
