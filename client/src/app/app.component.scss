@@ -1,14 +1,17 @@
 header {
-	position: fixed;
-	top: 0;
-	width: 100vw;
-}
+	position: sticky;
+	padding-bottom: 10px;
 
 	nav {
-		position: absolute;
-		right: 0;
+		text-align: right;
+
+		.nav-link {
+			margin: 5px;
+		}
 	}
+}
+
 
 main {
-	margin-top: 0;
+	height: 200vh
 }

@@ -1,11 +1,47 @@
-<h1>{{ title }}</h1>
+<header>
+	<h1>{{ title }}</h1>
+	
+	<nav>
 
-<nav>
-	<a routerLink="/users" *ngIf="isLoggedIn">Liste des utilisateurs</a>
-	<a routerLink="/profile" *ngIf="isLoggedIn">Mon profil</a>
-	<a (click)="logout()" *ngIf="isLoggedIn">Se déconnecter</a>
-	<a routerLink="/login" *ngIf="!isLoggedIn">Se connecter</a>
-	<a routerLink="/register" *ngIf="!isLoggedIn">S'enregistrer</a>
-</nav>
+		<a mat-flat-button 
+			routerLink="/users" 
+			*ngIf="isLoggedIn" 
+			class="nav-link">
+			Liste des utilisateurs
+		</a>
 
-<router-outlet></router-outlet>
+		<a mat-flat-button 
+			routerLink="/profile" 
+			*ngIf="isLoggedIn"
+			class="nav-link">
+			Mon profil
+		</a>
+
+		<button mat-flat-button 
+			(click)="logout()" 
+			*ngIf="isLoggedIn"
+			class="nav-link">
+			Se déconnecter
+		</button>
+
+		<a mat-flat-button 
+			routerLink="/login" 
+			*ngIf="!isLoggedIn"
+			class="nav-link">
+			Se connecter
+		</a>
+
+		<a mat-flat-button 
+			routerLink="/register" 
+			*ngIf="!isLoggedIn"
+			class="nav-link">
+			S'enregistrer
+		</a>
+		
+	</nav>
+
+</header>
+
+<main>
+	<router-outlet></router-outlet>
+</main>
