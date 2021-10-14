@@ -4,12 +4,13 @@
 	novalidate
 >
 
-	<div>
-		<label for="username">Nom d'utilisateur</label>
+	<div class="form-group">
+		<label for="username" class="form-line">Nom d'utilisateur</label>
 		<input 
 			type="text"
 			name="username"
 			formControlName="username"
+			class="form-line"
 			autofocus
 			required
 		/>
@@ -18,12 +19,13 @@
 		</div>
 	</div>
 
-	<div>
-		<label for="email">Email</label>
+	<div class="form-group">
+		<label for="email" class="form-line">Email</label>
 		<input 
 			type="email"
 			name="email"
 			formControlName="email"
+			class="form-line"
 			required
 		/>
 		<div *ngIf="isSubmitted && formControls.email.errors">
@@ -31,12 +33,13 @@
 		</div>
 	</div>
 
-	<div>
-		<label for="password">Mot de passe</label>
+	<div class="form-group">
+		<label for="password" class="form-line">Mot de passe</label>
 		<input 
 			type="password" 
       name="password" 
       formControlName="password"
+			class="form-line"
       required
 		/>
 		<div *ngIf="isSubmitted && formControls.password.errors">
@@ -44,12 +47,13 @@
     </div>
 	</div>
 
-	<div>
-		<label for="confirm-password">Confirmation du mot de passe</label>
+	<div class="form-group">
+		<label for="confirm-password" class="form-line">Confirmation du mot de passe</label>
 		<input 
 			type="password" 
       name="confirm-password" 
       formControlName="confirmPassword"
+			class="form-line"
       required
 		/>
 		<div *ngIf="isSubmitted && (formControls.confirmPassword.errors || registerForm.hasError('notSame'))">
@@ -57,7 +61,7 @@
     </div>
 	</div>
 
-	<button type="submit">S'enregistrer</button>
+	<button mat-flat-button color="accent" type="submit" class="submit-btn">S'enregistrer</button>
 
 	<div *ngIf="errorMessage">
 		Connexion impossible: {{ errorMessage }}
