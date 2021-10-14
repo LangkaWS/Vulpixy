@@ -9,3 +9,20 @@ body {
 	background-color: $bg-color;
 	padding: 0px 10px;
 }
+
+form {
+	width: 30vw;
+	margin: auto;
+
+	.form-group {
+		margin: 10px;
+
+		.form-line {
+			width: 100%;
+		}
+	}
+
+	.submit-btn {
+		margin: 10px;
+	}
+}

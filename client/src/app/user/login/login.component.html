@@ -4,12 +4,13 @@
   novalidate
 >
 
-	<div>
-		<label for="username">Nom d'utilisateur</label>
+	<div class="form-group">
+		<label for="username" class="form-line">Nom d'utilisateur</label><br />
     <input 
       type="text" 
       name="username" 
       formControlName="username"
+			class="form-line"
       autofocus
       required
     />
@@ -20,12 +21,13 @@
     </div>
 	</div>
 
-	<div>
-		<label for="password">Mot de passe</label>
+	<div class="form-group">
+		<label for="password" class="form-line">Mot de passe</label><br />
     <input 
       type="password" 
       name="password" 
       formControlName="password"
+			class="form-line"
       required
     />
     <div
@@ -35,7 +37,7 @@
     </div>
 	</div>
 
-	<button type="submit">Se connecter</button>
+	<button mat-flat-button color="accent" type="submit" class="submit-btn">Se connecter</button>
 
 	<div *ngIf="isLoginFailed">
 		Connexion impossible : {{ errorMessage }}
