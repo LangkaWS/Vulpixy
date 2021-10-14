@@ -4,6 +4,7 @@
 | Commit Type | Title                    | Description                                                                                                 | Emoji  |
 | ----------- | ------------------------ | ----------------------------------------------------------------------------------------------------------- |:------:|
 | `feat`      | Feature                  | A new feature                                                                                               | ✨     |
+| `style`     | Style                    | Add or update UI and style files                                                                            | 💄     |
 | `fix`       | Bug Fix                  | A bug fix                                                                                                   | 🐛     |
 | `doc`       | Documentation            | Documentation only changes                                                                                  | 📚     |
 | `format`    | Format                   | Change that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)       | 🎨     |
