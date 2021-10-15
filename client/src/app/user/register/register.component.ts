@@ -53,9 +53,22 @@ export class RegisterComponent implements OnInit {
 		this._privateUserApiService.register(user).subscribe(() => {
 			this._router.navigateByUrl('');
 		}, error => {
-			this.errorMessage = error.error;
+			this.errorMessage = this.createErrorMessage(error.error.error);
 		});
 		
+	}
+
+	private createErrorMessage(errorMessage: string): string {
+		switch(errorMessage) {
+			case 'MissingParameter':
+				return `Le nom d'utilisateur et le mot de passe sont requis`;
+			case 'UsernameAlreadyInUse':
+				return `Ce nom d'utilisateur n'est pas disponible`;
+			case 'EmailAlreadyInUse':
+				return `Cet email est déjà utilisé`;
+			default:
+				return errorMessage;
+		}
 	}
 
 }
