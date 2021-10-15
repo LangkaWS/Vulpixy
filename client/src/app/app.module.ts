@@ -13,6 +13,7 @@ import { ErrorDialogComponent } from './errors/error-dialog/error-dialog.compone
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GlobalErrorHandler } from './_services/error/global-error-handler';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { ProfileComponent } from './user/profile/profile.component';
 
@@ -32,7 +33,8 @@ import { ProfileComponent } from './user/profile/profile.component';
 		ReactiveFormsModule,
 		HttpClientModule,
 		BrowserAnimationsModule,
-		MatDialogModule
+		MatDialogModule,
+		MatButtonModule
   ],
   providers: [
 		{
