@@ -45,9 +45,20 @@ export class LoginComponent implements OnInit {
       this.isLoginFailed = false;
       this.router.navigateByUrl('');
     }, error => {
-      this.errorMessage = error.error;
+      this.errorMessage = this.createErrorMessage(error.error.error);
       this.isLoginFailed = true;
     });
+	}
+
+	private createErrorMessage(errorMessage: string): string {
+		switch(errorMessage) {
+			case 'InvalidCredentials':
+				return `Le nom d'utilisateur ou le mot de passe est incorrect`;
+			case 'MissingParameter':
+				return `Le nom d'utilisateur et le mot de passe sont requis`;
+			default:
+				return errorMessage;
+		}
 	}
 
 }

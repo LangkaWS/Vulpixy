@@ -37,6 +37,9 @@ export class CustomHttpInterceptor implements HttpInterceptor {
 						errorMessage = httpErrorResponse.error.message;
 					} else {
 						switch (httpErrorResponse.status) {
+							case 400:
+								console.error('(CustomHttpInterceptor)', 'Bad Request');
+								break;
               case 401:
                 console.error('(CustomHttpInterceptor)', 'Unauthorized request');
                 break;
@@ -54,7 +57,7 @@ export class CustomHttpInterceptor implements HttpInterceptor {
             }
 					}
 
-					return throwError(errorMessage);
+					return throwError(httpErrorResponse);
 				}
 			)
 		)

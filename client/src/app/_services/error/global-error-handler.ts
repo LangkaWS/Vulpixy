@@ -13,12 +13,10 @@ export class GlobalErrorHandler implements ErrorHandler {
 
 	public handleError(error: any) {
 		if (!(error instanceof HttpErrorResponse)) {
-			error = error.rejection
+			this._zone.run(() => 
+				this._errorDialogService.openDialog(error?.message, error?.status)
+			);
 		}
-		
-		this._zone.run(() => 
-		this._errorDialogService.openDialog(error?.message, error?.status)
-		);
 		
 		console.error('Error from global error handler', error);
 	}
