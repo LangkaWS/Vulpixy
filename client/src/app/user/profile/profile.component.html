@@ -3,7 +3,7 @@
 	<ul>
 		<li>Nom d'utilisateur : {{ user.username }}</li>
 		<li>Email: {{ user.email }}</li>
-		<li>Membre depuis : {{ user.createdAt }}</li>
+		<li>Membre depuis : {{ user.createdAt | date:'MMMM y' }}</li>
 	</ul>
 
 	<button mat-flat-button (click)="edit()" class="primary-btn">Editer mon profil</button>

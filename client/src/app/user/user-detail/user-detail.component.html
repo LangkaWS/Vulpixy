@@ -2,6 +2,6 @@
 	<h2>Profil de {{ user.username }}</h2>
 	<ul>
 		<li>Nom d'utilisateur : {{ user.username }}</li>
-		<li>Membre depuis : {{ user.createdAt }}</li>
+		<li>Membre depuis : {{ user.createdAt | date:'MMMM y' }}</li>
 	</ul>
 </div>

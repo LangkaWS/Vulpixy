@@ -1,7 +1,10 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { ErrorHandler, LOCALE_ID, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+registerLocaleData(localeFr);
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -37,6 +40,10 @@ import { ProfileComponent } from './user/profile/profile.component';
 		MatButtonModule
   ],
   providers: [
+		{
+			provide: LOCALE_ID,
+			useValue: 'fr-FR'
+		},
 		{
 			provide: HTTP_INTERCEPTORS,
 			useClass: CustomHttpInterceptor,
