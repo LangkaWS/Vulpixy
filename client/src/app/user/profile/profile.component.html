@@ -6,7 +6,7 @@
 		<li>Membre depuis : {{ user.createdAt }}</li>
 	</ul>
 
-	<button (click)="edit()">Editer mon profil</button>
+	<button mat-flat-button (click)="edit()" class="primary-btn">Editer mon profil</button>
 </div>
 
 <form
@@ -55,7 +55,7 @@
     </div>
 	</div>
 
-	<button type="submit">Enregistrer</button>
+	<button mat-flat-button type="submit" class="submit-btn">Enregistrer</button>
 
 	<div *ngIf="errorMessage">
 		Connexion impossible: {{ errorMessage }}
