@@ -5,6 +5,7 @@ import database from './database';
 import routeConfig from './routes';
 import cors from 'cors';
 import session from 'express-session';
+import { Server, Socket } from 'socket.io';
 
 const envVars = env();
 
@@ -33,6 +34,18 @@ app.use(cors(corsOptions));
 app.use(session(sessionCookieOptions));
 
 const httpServer = createServer(app);
+const ioConfig = {
+	cors: {
+		origin: envVars.CLIENT_URL
+	}
+};
+const io = new Server(httpServer, ioConfig);
+
+const onConnection = (socket: Socket) => {
+	console.log(`Hello ${socket.id}`);
+};
+
+io.on('connection', onConnection);
 
 httpServer.listen(port, () => {
 	console.log(`Listening at http://localhost:${port}`);
