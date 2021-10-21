@@ -19,6 +19,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { ProfileComponent } from './user/profile/profile.component';
+import { HomeComponent } from './home/home/home.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ProfileComponent } from './user/profile/profile.component';
     UsersComponent,
     ErrorDialogComponent,
     UserDetailComponent,
-    ProfileComponent
+    ProfileComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

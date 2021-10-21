@@ -4,6 +4,12 @@
 	<nav>
 
 		<a mat-flat-button 
+			routerLink="/" 
+			class="nav-link">
+			Accueil
+		</a>
+
+		<a mat-flat-button 
 			routerLink="/users" 
 			*ngIf="isLoggedIn" 
 			class="nav-link">
