@@ -56,6 +56,7 @@
 	</div>
 
 	<button mat-flat-button type="submit" class="submit-btn">Enregistrer</button>
+	<button mat-flat-button (click)="cancel()" class="cancel-btn">Annuler</button>
 
 	<div *ngIf="errorMessage">
 		Connexion impossible: {{ errorMessage }}

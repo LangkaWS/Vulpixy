@@ -27,11 +27,7 @@ export class ProfileComponent implements OnInit {
 		private authService: AuthService
 	) {
 		this.user = this.getCurrentUser();
-		this.profileForm = this.formBuilder.group({
-			username: this.user?.username,
-			email: this.user?.email,
-			password: ''
-		});
+		this.profileForm = this.initForm();
 	}
 
   ngOnInit(): void {
@@ -45,6 +41,14 @@ export class ProfileComponent implements OnInit {
 	private getCurrentUser() {
 		const userString = window.sessionStorage.getItem('user');
 		return userString ? this.cryptoService.decrypt(userString) : null;
+	}
+
+	private initForm() {
+		return this.formBuilder.group({
+			username: this.user?.username,
+			email: this.user?.email,
+			password: ''
+		});
 	}
 
 	public edit() {
@@ -72,6 +76,11 @@ export class ProfileComponent implements OnInit {
 			this.errorMessage = error.error
 		})
 
+	}
+
+	public cancel() {
+		this.profileForm = this.initForm();
+		this.displayForm = false;
 	}
 
 }
