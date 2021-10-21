@@ -26,5 +26,10 @@ form {
 
 .primary-btn {
 	margin: 10px;
+	background-color: $primary-color;
+}
+
+.accent-btn {
+	margin: 10px;
 	background-color: $accent-color;
 }

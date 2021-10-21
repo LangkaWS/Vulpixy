@@ -21,6 +21,13 @@ import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { ProfileComponent } from './user/profile/profile.component';
 import { HomeComponent } from './home/home/home.component';
 
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { environment } from 'src/environments/environment';
+import { FighterComponent } from './games/fighter/fighter.component';
+import { FighterInstanceComponent } from './games/fighter-instance/fighter-instance.component';
+
+const config: SocketIoConfig = { url: environment.apiURL }
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +37,9 @@ import { HomeComponent } from './home/home/home.component';
     ErrorDialogComponent,
     UserDetailComponent,
     ProfileComponent,
-    HomeComponent
+    HomeComponent,
+    FighterComponent,
+    FighterInstanceComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +48,8 @@ import { HomeComponent } from './home/home/home.component';
 		HttpClientModule,
 		BrowserAnimationsModule,
 		MatDialogModule,
-		MatButtonModule
+		MatButtonModule,
+		SocketIoModule.forRoot(config)
   ],
   providers: [
 		{
