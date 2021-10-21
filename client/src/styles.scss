@@ -1,8 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
-$title-color: #DA5F17;
-$text-color: #BEBEBE;
-$icon-color: #84628F;
-$bg-color: #242424;
+@import "./app/shared/variables.scss";
 
 body {
 	color: $text-color;
